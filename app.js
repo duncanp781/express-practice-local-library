@@ -8,10 +8,16 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var catalogRouter = require('./routes/catalog');  //Import routes for "catalog" area of site
 
+const compression = require('compression');
+const helmet = require('helmet');
+
 var app = express();
 
+app.use(helmet());
+app.use(compression());
+
 const mongoose = require("mongoose");
-const mongoDB =
+const mongoDB = process.env.MONGODB_URI ||
   "mongodb+srv://admin:hazard@cluster0.dnbalwd.mongodb.net/?retryWrites=true&w=majority";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
